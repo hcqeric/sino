@@ -14,6 +14,10 @@
   </div>
 </template>
 
+<script>
+  import '~/assets/css/index.less';
+</script>
+
 <style lang="less" scoped>
 
 @import "~/assets/css/common.less";

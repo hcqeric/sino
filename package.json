@@ -4,13 +4,16 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --dotenv .env.dev",
+    "serve": "nuxt dev --dotenv .env.dev",
+    "test": "nuxt dev --dotenv .env.test",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
     "@ant-design-vue/nuxt": "^1.3.0",
+    "@nuxtjs/tailwindcss": "^6.10.3",
     "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "@pinia/nuxt": "^0.5.1",
     "autoprefixer": "^10.4.16",
@@ -18,5 +21,8 @@
     "nuxt": "^3.9.0",
     "vue": "^3.4.5",
     "vue-router": "^4.2.5"
+  },
+  "dependencies": {
+    "nuxt-swiper": "^1.2.2"
   }
 }

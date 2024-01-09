@@ -15,7 +15,8 @@ export default defineNuxtConfig({
   modules: [
     '@ant-design-vue/nuxt',
     '@pinia/nuxt',
-    // '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    'nuxt-swiper'
   ],
   antd:{
     // Options
@@ -28,14 +29,21 @@ export default defineNuxtConfig({
       apiBase: '/api'
     }
   },
-  // css:['~/assets/css/tailwind.css'],
+  css:['~/assets/css/tailwind.css'],
   postcss: {
     plugins: {
-      // tailwindcss: {},
+      tailwindcss: {},
       autoprefixer: {},
     }
   },
   vite: {
+    server: {
+      proxy: {
+        '^/mock': {
+          target: 'http://yapi.sinosafe.com.cn'
+        }
+      }
+    },
     css: {
       preprocessorOptions: {
         less: {
