@@ -7,17 +7,17 @@
                     <span class="menu-item active">华安新闻</span>
                 </div>
                 <div class="news-content-wrap">
-                    {{newsListData}}
-                    <div v-for="(item, index) in newsListData" :key="index">
-                        {{item}}
-                    </div>
-                    <div class="content-list-w">
-                        <div class="content-item">
-                            <span class="date">2023-07-08</span>
-                            <span class="title">7.8全国保险公众宣传日，华安保险为奋斗者加油</span>
+                    <div class="content-list-w" v-if="newsListData.length">
+                        <div v-for="(item, index) in newsListData" :key="item.nid">
+                            <NuxtLink :to="`/news/${item.nid}`">
+                                <div class="content-item">
+                                    <span class="date">{{item && item.newsDate || ''}}</span>
+                                    <span class="title">{{item && item.newsTitle}}</span>
+                                </div>
+                            </NuxtLink>
                         </div>
                     </div>
-                    <a-pagination v-model:current="current" :total="500" />
+                    <a-pagination v-model:current="current" :total="500" @change="fetchNewsList" />
                 </div>
             </div>
            
@@ -26,13 +26,14 @@
 </template>
 <script setup lang="ts">
     const current = ref(6);
+    let newsListData = ref([])
     const fetchNewsList = async () => {
-        const { data: newsListData, pending, error, refresh } = await useFetch('http://yapi.sinosafe.com.cn/mock/1367/news/list')
-       
+        const { data:listData , pending, error, refresh } = await useFetch('http://yapi.sinosafe.com.cn/mock/1367/news/list')
+        newsListData.value = []
+        newsListData.value.push(...(listData.value))
     }
-    onMounted(() => {
-        fetchNewsList()
-    })
+    fetchNewsList()
+    
 
     
 
@@ -65,17 +66,24 @@
             background-color: #fff;
             padding: 36px 36px 136px;
             .content-list-w{
-                height: 440px;
+                height: 439px;
+                overflow: hidden;
                 .content-item{
                     height: 54px;
-                    border-bottom: dashed 1px;
+                    border-bottom: #333 dashed 1px;
                     line-height: 54px;
                     font-size: 16px;
                     overflow: hidden;
                     white-space: nowrap;
                     text-overflow: ellipsis;
+                    cursor: pointer;
+                    color: #333;
+                    &:hover{
+                        background: #e9e9e9;
+                    }
                     .date{
                         padding-right: 20px;
+                        color: #666;
                     }
                 }
             }
